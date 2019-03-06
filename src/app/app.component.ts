@@ -28,6 +28,9 @@ export class AppComponent {
     });
   }
 
+  /**
+   * This method sends a logout request to the auth service from the side menu
+   */
   public onLogout() {
     this.authService.logout();
     this.router.navigateByUrl('/auth');

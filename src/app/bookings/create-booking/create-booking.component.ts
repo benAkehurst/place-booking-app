@@ -9,6 +9,9 @@ import { ModalController } from '@ionic/angular';
 })
 export class CreateBookingComponent implements OnInit {
 
+  /**
+   * Makes the selected place avaliable to the modal
+   */
   @Input() selectedPlace: Place;
 
   constructor(
@@ -17,10 +20,16 @@ export class CreateBookingComponent implements OnInit {
 
   ngOnInit() {}
 
+  /**
+   * Is called when the close modal button is pressed
+   */
   public onCancel() {
     this.modalController.dismiss(null, 'cancel');
   }
 
+  /**
+   * Is called when the book button is pressed.
+   */
   public onBookPlace() {
     this.modalController.dismiss({message: 'Book Clicked'}, 'confirm');
   }

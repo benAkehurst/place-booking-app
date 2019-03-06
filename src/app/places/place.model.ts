@@ -1,3 +1,7 @@
+/**
+ * Defines a model of 'what' a place consists of
+ */
+
 export class Place {
   constructor(
     public id: string,

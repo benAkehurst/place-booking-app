@@ -3,6 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { PlacesPage } from './places.page';
 
+/**
+ * Defines the routes for both the tabs at the bottom of the screen
+ */
 const routes: Routes = [
   {
     path: 'tabs',

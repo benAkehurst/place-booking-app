@@ -11,6 +11,9 @@ import { Place } from '../../place.model';
 })
 export class EditOfferPage implements OnInit {
 
+  /**
+   * Defines the place to be accesses by template
+   */
   public place: Place;
 
   constructor(
@@ -19,6 +22,10 @@ export class EditOfferPage implements OnInit {
     private navCtrl: NavController
   ) { }
 
+  /**
+    * This function looks to see if a place id is being passed as a route param
+    * If the place id exists on the route param is then it gets the place from the places service
+    */
   ngOnInit() {
     this.activatedRoute.paramMap.subscribe(paramMap => {
       if (!paramMap.has('placeId')) {

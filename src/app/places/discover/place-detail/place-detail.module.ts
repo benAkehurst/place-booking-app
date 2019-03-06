@@ -15,6 +15,11 @@ const routes: Routes = [
   }
 ];
 
+/**
+ * The createBooking component has been defined in the declarations
+ * It has also been defined as an entry component. This tells the place
+ * detail to load the component when the model is opened.
+ */
 @NgModule({
   imports: [
     CommonModule,

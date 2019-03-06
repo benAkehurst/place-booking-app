@@ -6,6 +6,10 @@ import { Place } from './place.model';
   providedIn: 'root'
 })
 export class PlacesService {
+  
+  /**
+   * Defines dummy data to be used as a place
+   */
   private _places: Place[] = [
     new Place(
       'p1',
@@ -37,12 +41,20 @@ export class PlacesService {
     )
   ];
 
+  /**
+   * Makes a copy of the places and returns them to who requested them
+   */
   get places() {
     return [...this._places];
   }
 
   constructor() {}
 
+  /**
+   * Takes a place id, searches the places array, and when a place with a matching ID is found, 
+   * it returns just that place.
+   * @param id 
+   */
   public getPlace(id: string) {
     return {...this._places.find(p => p.id === id)};
   }

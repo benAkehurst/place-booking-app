@@ -9,10 +9,16 @@ import { Place } from '../place.model';
 })
 export class DiscoverPage implements OnInit {
 
+  /**
+   * Defines an array of places
+   */
   public loadedPlaces: Place[];
 
   constructor(private placesService: PlacesService) { }
 
+  /**
+   * The init function gets a list of places from the places service
+   */
   ngOnInit() {
     this.loadedPlaces = this.placesService.places;
   }
