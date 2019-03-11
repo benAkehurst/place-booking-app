@@ -12,7 +12,7 @@ import { CreateBookingComponent } from '../../../bookings/create-booking/create-
   styleUrls: ['./place-detail.page.scss']
 })
 export class PlaceDetailPage implements OnInit {
-  
+
   /**
    * Defines the place to be accesses by template
    */

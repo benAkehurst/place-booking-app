@@ -28,8 +28,6 @@ export class OffersPage implements OnInit {
 
   /**
    * Goes to the edit offer page of a chose item
-   * @param offerId 
-   * @param slidingItem 
    */
   public onEdit(offerId: string, slidingItem: IonItemSliding) {
     slidingItem.close();

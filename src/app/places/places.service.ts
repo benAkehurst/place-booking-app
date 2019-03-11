@@ -6,7 +6,7 @@ import { Place } from './place.model';
   providedIn: 'root'
 })
 export class PlacesService {
-  
+
   /**
    * Defines dummy data to be used as a place
    */
@@ -51,9 +51,8 @@ export class PlacesService {
   constructor() {}
 
   /**
-   * Takes a place id, searches the places array, and when a place with a matching ID is found, 
+   * Takes a place id, searches the places array, and when a place with a matching ID is found,
    * it returns just that place.
-   * @param id 
    */
   public getPlace(id: string) {
     return {...this._places.find(p => p.id === id)};
