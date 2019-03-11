@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, ModalController } from '@ionic/angular';
+import { NavController, ModalController, ActionSheetController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 
 import { PlacesService } from '../../places.service';
@@ -22,7 +22,8 @@ export class PlaceDetailPage implements OnInit {
     private navCtrl: NavController,
     private activatedRoute: ActivatedRoute,
     private placesService: PlacesService,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private actionSheetController: ActionSheetController
   ) {}
 
   ngOnInit() {
@@ -40,9 +41,39 @@ export class PlaceDetailPage implements OnInit {
   }
 
   /**
-   * This method contols the operning and closing of the modeal when booking a place
+   * This method opens the actions sheet to open the options of what the user wants to do before the model opens
    */
   public onBookPlace() {
+    this.actionSheetController.create({
+      header: 'Choose an Action',
+      buttons: [
+        {
+          text: 'Select Date',
+          handler: () => {
+            this.openBookingModel('select');
+          }
+        },
+        {
+          text: 'Random Date',
+          handler: () => {
+            this.openBookingModel('random');
+          }
+        },
+        {
+          text: 'Cancel',
+          role: 'destructive'
+        }
+      ]
+    }).then(actionSheetEl => {
+      actionSheetEl.present();
+    });
+  }
+
+  /**
+   * This method contols the operning and closing of the modeal when booking a place
+   */
+  public openBookingModel(mode: 'select' | 'random') {
+    console.log(mode);
     this.modalController
       .create({
         component: CreateBookingComponent,
