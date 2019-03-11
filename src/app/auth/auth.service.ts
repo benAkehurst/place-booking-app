@@ -8,7 +8,7 @@ export class AuthService {
   /**
    * Protected variable to control if the user is logged in or not
    */
-  private _userIsAuthenticated: boolean = true;
+  private _userIsAuthenticated: boolean = false;
 
   /**
    * Gets the default value of the logged in state
