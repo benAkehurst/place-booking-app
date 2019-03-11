@@ -10,9 +10,14 @@ import { Place } from '../place.model';
 export class DiscoverPage implements OnInit {
 
   /**
-   * Defines an array of places
+   * Defines an array of all places
    */
   public loadedPlaces: Place[];
+
+  /**
+   * Defines an array of all the items, minus the first one
+   */
+  public listedLoadedPlaces: Place[];
 
   constructor(private placesService: PlacesService) { }
 
@@ -21,6 +26,7 @@ export class DiscoverPage implements OnInit {
    */
   ngOnInit() {
     this.loadedPlaces = this.placesService.places;
+    this.listedLoadedPlaces = this.placesService.places.slice(1);
   }
 
 }
