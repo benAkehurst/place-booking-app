@@ -5,27 +5,33 @@
 </ion-header>
 
 <ion-content padding>
-  <!-- Template Driven form -->
-  <form>
+  <!-- Template Driven Form Approach -->
+  <form #f="ngForm" (ngSubmit)="onSubmit(f)">
     <ion-grid>
       <ion-row>
         <ion-col size-md="6" offest-md="3">
           <ion-list>
             <ion-item>
               <ion-label position="floating">Email</ion-label>
-              <ion-input type="email"></ion-input>
+              <ion-input type="email" ngModel name="email" required email #emailCtrl="ngModel"></ion-input>
+            </ion-item>
+            <ion-item *ngIf="!emailCtrl.valid && emailCtrl.touched" lines="none">
+              <ion-label>Should be a valid email address.</ion-label>
             </ion-item>
             <ion-item>
               <ion-label position="floating">Password</ion-label>
-              <ion-input type="password"></ion-input>
+              <ion-input type="password" ngModel name="password" required minLength="6" #passwordCtrl="ngModel"></ion-input>
+            </ion-item>
+            <ion-item *ngIf="!passwordCtrl.valid && passwordCtrl.touched" lines="none">
+              <ion-label>Should be at least 6 charaters long.</ion-label>
             </ion-item>
           </ion-list>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col size-md="6" offest-md="3">
-          <ion-button color="primary" fill="clear" expand="block">Swich to Login</ion-button>
-          <ion-button color="primary" (click)="onLogin()" expand="block">Login</ion-button>
+          <ion-button color="primary" type="button" fill="clear" expand="block">Swich to Login</ion-button>
+          <ion-button color="primary" type="submit" expand="block" (click)="onLogin()" [disabled]="!f.valid">Login</ion-button>
         </ion-col>
       </ion-row>
     </ion-grid>

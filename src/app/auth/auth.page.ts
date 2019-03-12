@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './auth.service';
+import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
 
@@ -18,6 +19,10 @@ export class AuthPage implements OnInit {
     private loadingController: LoadingController) { }
 
   ngOnInit() {
+  }
+
+  public onSubmit(form: NgForm) {
+    console.log(form);
   }
 
   // Method to log user in
