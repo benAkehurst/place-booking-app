@@ -11,7 +11,15 @@ import { LoadingController } from '@ionic/angular';
 })
 export class AuthPage implements OnInit {
 
+  /**
+   * Defines if the loading state is true or false
+   */
   public isLoading: boolean = false;
+
+  /**
+   * Defines if the user is in login or sign up mode
+   */
+  public isLogin: boolean = true;
 
   constructor(
     private authService: AuthService,
@@ -21,8 +29,18 @@ export class AuthPage implements OnInit {
   ngOnInit() {
   }
 
+  /**
+   * Is called when the login form is submitted
+   */
   public onSubmit(form: NgForm) {
     console.log(form);
+  }
+
+  /**
+   * Is called when the user clicks the switch method button
+   */
+  public onSwitchAuthMode() {
+    this.isLogin = !this.isLogin;
   }
 
   // Method to log user in
