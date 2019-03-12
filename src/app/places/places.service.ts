@@ -16,28 +16,36 @@ export class PlacesService {
       'London Terrace House',
       'This is a 4 bedroom house in London',
       'https://lid.zoocdn.com/645/430/a5782818c4099dd83f42613511bc86c604838614.jpg',
-      220.0
+      220.0,
+      new Date('2019-01-01'),
+      new Date('2019-12-31')
     ),
     new Place(
       'p2',
       'Large London Flat',
       'This is a 3 bedroom flat in London',
       'https://lid.zoocdn.com/645/430/bbf8ccf0b241cc6200ad2c8787a66aecd264b3a6.jpg',
-      125.0
+      125.0,
+      new Date('2019-01-01'),
+      new Date('2019-12-31')
     ),
     new Place(
       'p3',
       'Medium London Flat',
       'This is a 2 bedroom flat in London',
       'https://lid.zoocdn.com/645/430/c814a6d27a1d00827eb40640cfb34f302defd39c.jpg',
-      110.0
+      110.0,
+      new Date('2019-01-01'),
+      new Date('2019-12-31')
     ),
     new Place(
       'p4',
       'Small London Flat',
       'This is a 1 bedroom flat in London',
       'https://lid.zoocdn.com/645/430/26e99a8ae88dab9d4f4084a1876bae8a1ab88a1d.jpg',
-      100.0
+      100.0,
+      new Date('2019-01-01'),
+      new Date('2019-12-31')
     )
   ];
 
