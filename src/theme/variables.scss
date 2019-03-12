@@ -6,7 +6,7 @@
   /** primary **/
   --ion-color-primary: #FE6368;
   --ion-color-primary-rgb: 254, 99, 104;
-  --ion-color-primary-contrast: #000000;
+  --ion-color-primary-contrast: #ffffff;
   --ion-color-primary-contrast-rgb: 0, 0, 0;
   --ion-color-primary-shade: #e0575c;
   --ion-color-primary-tint: #fe7377;
@@ -14,7 +14,7 @@
   /** secondary **/
   --ion-color-tertiary: #01D1C1;
   --ion-color-tertiary-rgb: 1, 209, 193;
-  --ion-color-tertiary-contrast: #000000;
+  --ion-color-tertiary-contrast: #ffffff;
   --ion-color-tertiary-contrast-rgb: 0, 0, 0;
   --ion-color-tertiary-shade: #01b8aa;
   --ion-color-tertiary-tint: #1ad6c7;
@@ -30,7 +30,7 @@
   /** success **/
   --ion-color-success: #14fc00;
   --ion-color-success-rgb: 20, 252, 0;
-  --ion-color-success-contrast: #000000;
+  --ion-color-success-contrast: #ffffff;
   --ion-color-success-contrast-rgb: 0, 0, 0;
   --ion-color-success-shade: #12de00;
   --ion-color-success-tint: #2cfc1a;
@@ -74,4 +74,18 @@
   --ion-color-light-contrast-rgb: 0, 0, 0;
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
+
+  /** sets toolbar color thoughout the whole app **/
+  --ion-toolbar-background: var(--ion-color-primary);
+  --ion-toolbar-color: var(--ion-color-primary-contrast);
+
+  /** Ios Bug fix for coloring the hamburger menu in the toolbar **/
+  ion-toolbar {
+    ion-button,
+    ion-back-button,
+    ion-menu-button,
+    .sc-ion-back-button-ios-h {
+      --color: white;
+    }
+  }
 }
