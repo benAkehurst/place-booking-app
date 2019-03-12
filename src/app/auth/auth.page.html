@@ -5,9 +5,29 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-item>
-    <ion-label position="floating">Email</ion-label>
-    <ion-input></ion-input>
-  </ion-item>
-  <ion-button color="primary" (click)="onLogin()">Login</ion-button>
+  <!-- Template Driven form -->
+  <form>
+    <ion-grid>
+      <ion-row>
+        <ion-col size-md="6" offest-md="3">
+          <ion-list>
+            <ion-item>
+              <ion-label position="floating">Email</ion-label>
+              <ion-input type="email"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Password</ion-label>
+              <ion-input type="password"></ion-input>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-md="6" offest-md="3">
+          <ion-button color="primary" fill="clear" expand="block">Swich to Login</ion-button>
+          <ion-button color="primary" (click)="onLogin()" expand="block">Login</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
 </ion-content>
