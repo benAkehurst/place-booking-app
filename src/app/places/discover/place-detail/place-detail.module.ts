@@ -6,7 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { PlaceDetailPage } from './place-detail.page';
-import { CreateBookingComponent } from 'src/app/bookings/create-booking/create-booking.component';
+import { CreateBookingComponent } from '../../../bookings/create-booking/create-booking.component';
 
 const routes: Routes = [
   {
@@ -15,11 +15,6 @@ const routes: Routes = [
   }
 ];
 
-/**
- * The createBooking component has been defined in the declarations
- * It has also been defined as an entry component. This tells the place
- * detail to load the component when the model is opened.
- */
 @NgModule({
   imports: [
     CommonModule,

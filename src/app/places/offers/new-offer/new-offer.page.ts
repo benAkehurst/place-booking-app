@@ -8,21 +8,18 @@ import { PlacesService } from '../../places.service';
 @Component({
   selector: 'app-new-offer',
   templateUrl: './new-offer.page.html',
-  styleUrls: ['./new-offer.page.scss'],
+  styleUrls: ['./new-offer.page.scss']
 })
 export class NewOfferPage implements OnInit {
+  form: FormGroup;
 
-  /**
-   * Defines an new form
-   */
-  public form: FormGroup;
-
-  constructor(private placesService: PlacesService, private router: Router, private loaderCtrl: LoadingController) { }
+  constructor(
+    private placesService: PlacesService,
+    private router: Router,
+    private loadingCtrl: LoadingController
+  ) {}
 
   ngOnInit() {
-    /**
-     * Build a basic blank form when the page is generated
-     */
     this.form = new FormGroup({
       title: new FormControl(null, {
         updateOn: 'blur',
@@ -43,34 +40,33 @@ export class NewOfferPage implements OnInit {
       dateTo: new FormControl(null, {
         updateOn: 'blur',
         validators: [Validators.required]
-      }),
+      })
     });
   }
 
-  /**
-   * Creates a new offer
-   */
-  public onCreateOffer() {
+  onCreateOffer() {
     if (!this.form.valid) {
       return;
     }
-    this.loaderCtrl.create({
-      message: 'Creating place...'
-    }).then(loadingEl => {
-      loadingEl.present();
-      console.log(this.form);
-      this.placesService.addPlace(
-        this.form.value.title,
-        this.form.value.description,
-        +this.form.value.price,
-        new Date(this.form.value.dateFrom),
-        new Date(this.form.value.dateTo)
-      ).subscribe(() => {
-        loadingEl.dismiss();
-        this.form.reset();
-        this.router.navigate(['/places/tabs/offers']);
+    this.loadingCtrl
+      .create({
+        message: 'Creating place...'
+      })
+      .then(loadingEl => {
+        loadingEl.present();
+        this.placesService
+          .addPlace(
+            this.form.value.title,
+            this.form.value.description,
+            +this.form.value.price,
+            new Date(this.form.value.dateFrom),
+            new Date(this.form.value.dateTo)
+          )
+          .subscribe(() => {
+            loadingEl.dismiss();
+            this.form.reset();
+            this.router.navigate(['/places/tabs/offers']);
+          });
       });
-    });
   }
-
 }

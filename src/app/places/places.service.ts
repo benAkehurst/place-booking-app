@@ -2,17 +2,13 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { take, map, tap, delay } from 'rxjs/operators';
 
-import { AuthService } from '../auth/auth.service';
 import { Place } from './place.model';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PlacesService {
-
-  /**
-   * Defines dummy data to be used as a place
-   */
   public _places = new BehaviorSubject<Place[]>([
     new Place(
       'p1',
@@ -22,7 +18,7 @@ export class PlacesService {
       220.0,
       new Date('2019-01-01'),
       new Date('2019-12-31'),
-      'abc'
+      'xyz'
     ),
     new Place(
       'p2',
@@ -56,36 +52,33 @@ export class PlacesService {
     )
   ]);
 
-  /**
-   * Makes a copy of the places and returns them to who requested them
-   */
   get places() {
     return this._places.asObservable();
   }
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService) {}
 
-  /**
-   * Takes a place id, searches the places array, and when a place with a matching ID is found,
-   * it returns just that place.
-   */
-  public getPlace(id: string) {
-    return this.places
-      .pipe(take(1),
-        map(places => {
-          return { ...places.find(p => p.id === id) };
-        }));
+  getPlace(id: string) {
+    return this.places.pipe(
+      take(1),
+      map(places => {
+        return { ...places.find(p => p.id === id) };
+      })
+    );
   }
 
-  /**
-   * Adds a new place to the backend
-   */
-  public addPlace(title: string, description: string, price: number, dateFrom: Date, dateTo: Date) {
+  addPlace(
+    title: string,
+    description: string,
+    price: number,
+    dateFrom: Date,
+    dateTo: Date
+  ) {
     const newPlace = new Place(
       Math.random().toString(),
       title,
       description,
-      'https://lid.zoocdn.com/645/430/a5782818c4099dd83f42613511bc86c604838614.jpg',
+      'https://lonelyplanetimages.imgix.net/mastheads/GettyImages-538096543_medium.jpg?sharp=10&vib=20&w=1200',
       price,
       dateFrom,
       dateTo,
@@ -100,10 +93,7 @@ export class PlacesService {
     );
   }
 
-  /**
-   * Updates an offer when it has been edited
-   */
-  public updatePlace(placeId: string, title: string, description: string) {
+  updatePlace(placeId: string, title: string, description: string) {
     return this.places.pipe(
       take(1),
       delay(1000),
@@ -117,8 +107,8 @@ export class PlacesService {
           description,
           oldPlace.imageUrl,
           oldPlace.price,
-          oldPlace.avaliableFrom,
-          oldPlace.avaliableTo,
+          oldPlace.availableFrom,
+          oldPlace.availableTo,
           oldPlace.userId
         );
         this._places.next(updatedPlaces);

@@ -3,9 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { PlacesPage } from './places.page';
 
-/**
- * Defines the routes for both the tabs at the bottom of the screen
- */
 const routes: Routes = [
   {
     path: 'tabs',
@@ -20,7 +17,8 @@ const routes: Routes = [
           },
           {
             path: ':placeId',
-            loadChildren: './discover/place-detail/place-detail.module#PlaceDetailPageModule'
+            loadChildren:
+              './discover/place-detail/place-detail.module#PlaceDetailPageModule'
           }
         ]
       },
@@ -33,15 +31,18 @@ const routes: Routes = [
           },
           {
             path: 'new',
-            loadChildren: './offers/new-offer/new-offer.module#NewOfferPageModule'
+            loadChildren:
+              './offers/new-offer/new-offer.module#NewOfferPageModule'
           },
           {
             path: 'edit/:placeId',
-            loadChildren: './offers/edit-offer/edit-offer.module#EditOfferPageModule'
+            loadChildren:
+              './offers/edit-offer/edit-offer.module#EditOfferPageModule'
           },
           {
             path: ':placeId',
-            loadChildren: './offers/offer-bookings/offer-bookings.module#OfferBookingsPageModule'
+            loadChildren:
+              './offers/offer-bookings/offer-bookings.module#OfferBookingsPageModule'
           }
         ]
       },
@@ -63,4 +64,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class PlacesRoutingModule { }
+export class PlacesRoutingModule {}

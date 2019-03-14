@@ -1,7 +1,3 @@
-/**
- * Defines a model of 'what' a place consists of
- */
-
 export class Place {
   constructor(
     public id: string,
@@ -9,8 +5,8 @@ export class Place {
     public description: string,
     public imageUrl: string,
     public price: number,
-    public avaliableFrom: Date,
-    public avaliableTo: Date,
+    public availableFrom: Date,
+    public availableTo: Date,
     public userId: string
   ) {}
 }

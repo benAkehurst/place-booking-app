@@ -4,44 +4,24 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class AuthService {
+  private _userIsAuthenticated = true;
+  private _userId = 'abc';
 
-  /**
-   * Protected variable to control if the user is logged in or not
-   */
-  private _userIsAuthenticated: boolean = true;
-
-  /**
-   * Private variable to hold the user ID
-   */
-  private _userId: string = 'abc';
-
-  /**
-   * Gets the default value of the logged in state
-   */
   get userIsAuthenticated() {
     return this._userIsAuthenticated;
   }
 
-  /**
-   * Returns the User ID when called
-   */
   get userId() {
     return this._userId;
   }
 
-  constructor() { }
+  constructor() {}
 
-  /**
-   * Method to login user
-   */
-  public login() {
+  login() {
     this._userIsAuthenticated = true;
   }
 
-  /**
-   * Method to logout user
-   */
-  public logout() {
+  logout() {
     this._userIsAuthenticated = false;
   }
 }
