@@ -1,19 +1,26 @@
-import { Component, OnInit } from '@angular/core';
-import { Place } from '../../place.model';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
+import { Subscription } from 'rxjs';
+
 import { PlacesService } from '../../places.service';
+import { Place } from '../../place.model';
 
 @Component({
   selector: 'app-offer-bookings',
   templateUrl: './offer-bookings.page.html',
   styleUrls: ['./offer-bookings.page.scss'],
 })
-export class OfferBookingsPage implements OnInit {
+export class OfferBookingsPage implements OnInit, OnDestroy {
   /**
    * Defines the place to be accesses by template
    */
   public place: Place;
+
+  /**
+   * Private Var to hold the subscription to the observable
+   */
+  private placeSub: Subscription;
 
   constructor(
     private activtedRoute: ActivatedRoute,
@@ -31,8 +38,19 @@ export class OfferBookingsPage implements OnInit {
         this.navCtrl.navigateBack('/places/tabs/offers');
         return;
       }
-      this.place = this.placesService.getPlace(paramMap.get('placeId'));
+      this.placeSub = this.placesService.getPlace(paramMap.get('placeId')).subscribe(place => {
+        this.place = place;
+      });
     });
+  }
+
+  /**
+   * Kills the observable when the component is destroyed
+   */
+  ngOnDestroy(): void {
+    if (this.placeSub) {
+      this.placeSub.unsubscribe();
+    }
   }
 
 }

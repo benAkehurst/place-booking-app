@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SegmentChangeEventDetail } from '@ionic/core';
+import { Subscription } from 'rxjs';
 
 import { PlacesService } from '../places.service';
 import { Place } from '../place.model';
@@ -9,7 +10,7 @@ import { Place } from '../place.model';
   templateUrl: './discover.page.html',
   styleUrls: ['./discover.page.scss'],
 })
-export class DiscoverPage implements OnInit {
+export class DiscoverPage implements OnInit, OnDestroy {
 
   /**
    * Defines an array of all places
@@ -21,14 +22,30 @@ export class DiscoverPage implements OnInit {
    */
   public listedLoadedPlaces: Place[];
 
+  /**
+   * Private observable to hold the subscription
+   */
+  private placesSub: Subscription;
+
   constructor(private placesService: PlacesService) { }
 
   /**
    * The init function gets a list of places from the places service
    */
   ngOnInit() {
-    this.loadedPlaces = this.placesService.places;
-    this.listedLoadedPlaces = this.placesService.places.slice(1);
+    this.placesSub = this.placesService.places.subscribe(places => {
+      this.loadedPlaces = places;
+      this.listedLoadedPlaces = this.loadedPlaces.slice(1);
+    });
+  }
+
+  /**
+   * Kills the observable when the component is destroyed
+   */
+  ngOnDestroy(): void {
+    if (this.placesSub) {
+      this.placesSub.unsubscribe();
+    }
   }
 
   public onFilterUpdate(event: CustomEvent<SegmentChangeEventDetail>) {

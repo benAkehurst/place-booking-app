@@ -1,16 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { PlacesService } from '../../places.service';
 import { NavController } from '@ionic/angular';
-import { Place } from '../../place.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+
+import { PlacesService } from '../../places.service';
+import { Subscription } from 'rxjs';
+import { Place } from '../../place.model';
 
 @Component({
   selector: 'app-edit-offer',
   templateUrl: './edit-offer.page.html',
   styleUrls: ['./edit-offer.page.scss'],
 })
-export class EditOfferPage implements OnInit {
+export class EditOfferPage implements OnInit, OnDestroy {
 
   /**
    * Defines an new form
@@ -21,6 +23,11 @@ export class EditOfferPage implements OnInit {
    * Defines the place to be accesses by template
    */
   public place: Place;
+
+  /**
+   * Var to hold the subscription to observable
+   */
+  private placeSub: Subscription;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -38,18 +45,29 @@ export class EditOfferPage implements OnInit {
         this.navCtrl.navigateBack('/places/tabs/offers');
         return;
       }
-      this.place = this.placesService.getPlace(paramMap.get('placeId'));
-      this.form = new FormGroup({
-        title: new FormControl(this.place.title, {
-          updateOn: 'blur',
-          validators: [Validators.required]
-        }),
-        description: new FormControl(this.place.description, {
-          updateOn: 'blur',
-          validators: [Validators.required, Validators.maxLength(180)]
-        })
+      this.placeSub = this.placesService.getPlace(paramMap.get('placeId')).subscribe(place => {
+        this.place = place;
+        this.form = new FormGroup({
+          title: new FormControl(this.place.title, {
+            updateOn: 'blur',
+            validators: [Validators.required]
+          }),
+          description: new FormControl(this.place.description, {
+            updateOn: 'blur',
+            validators: [Validators.required, Validators.maxLength(180)]
+          })
+        });
       });
     });
+  }
+
+  /**
+   * Kills the observable when the component is destroyed
+   */
+  ngOnDestroy(): void {
+    if (this.placeSub) {
+      this.placeSub.unsubscribe();
+    }
   }
 
   public onUpdateOffer() {
