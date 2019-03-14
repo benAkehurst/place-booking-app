@@ -10,7 +10,10 @@ import { AuthService } from './auth.service';
 export class AuthGuard implements CanLoad {
   constructor(private authService: AuthService, private router: Router) {}
 
-  canLoad(
+  /**
+   * This bloack the main app if the user isn't logged in
+   */
+  public canLoad(
     route: Route,
     segments: UrlSegment[]
   ): Observable<boolean> | Promise<boolean> | boolean {

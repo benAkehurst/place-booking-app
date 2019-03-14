@@ -11,8 +11,8 @@ import { AuthService } from './auth.service';
   styleUrls: ['./auth.page.scss']
 })
 export class AuthPage implements OnInit {
-  isLoading = false;
-  isLogin = true;
+  public isLoading = false;
+  public isLogin = true;
 
   constructor(
     private authService: AuthService,
@@ -22,7 +22,10 @@ export class AuthPage implements OnInit {
 
   ngOnInit() {}
 
-  onLogin() {
+  /**
+   * This activates when a user logs in
+   */
+  public onLogin() {
     this.isLoading = true;
     this.authService.login();
     this.loadingCtrl
@@ -37,11 +40,19 @@ export class AuthPage implements OnInit {
       });
   }
 
-  onSwitchAuthMode() {
+  /**
+   * Switches the login to register mode
+   * LOOK HERE: Switching between 2 UI states
+   */
+  public onSwitchAuthMode() {
     this.isLogin = !this.isLogin;
   }
 
-  onSubmit(form: NgForm) {
+  /**
+   * This is called when a user submits the form
+   * LOOK HERE: Template Driven Form Approach
+   */
+  public onSubmit(form: NgForm) {
     if (!form.valid) {
       return;
     }
