@@ -15,7 +15,10 @@ export class BookingService {
 
   constructor(private authService: AuthService) {}
 
-  addBooking(
+  /**
+   * Adds a new booking to the users bookings
+   */
+  public addBooking(
     placeId: string,
     placeTitle: string,
     placeImage: string,
@@ -46,5 +49,16 @@ export class BookingService {
     );
   }
 
-  cancelBooking(bookingId: string) {}
+  /**
+   * Looks to see if a booking has a bookingid and deletes it if it does
+   */
+  public cancelBooking(bookingId: string) {
+    return this.bookings.pipe(
+      take(1),
+      delay(1000),
+      tap(bookings => {
+        this._bookings.next(bookings.filter(b => b.id !== bookingId));
+      })
+    );
+  }
 }
