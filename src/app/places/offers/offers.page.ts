@@ -12,7 +12,8 @@ import { Place } from '../place.model';
   styleUrls: ['./offers.page.scss']
 })
 export class OffersPage implements OnInit, OnDestroy {
-  offers: Place[];
+  public offers: Place[];
+  public isLoading: boolean = false;
   private placesSub: Subscription;
 
   constructor(private placesService: PlacesService, private router: Router) {}
@@ -23,15 +24,25 @@ export class OffersPage implements OnInit, OnDestroy {
     });
   }
 
-  onEdit(offerId: string, slidingItem: IonItemSliding) {
-    slidingItem.close();
-    this.router.navigate(['/', 'places', 'tabs', 'offers', 'edit', offerId]);
-    console.log('Editing item', offerId);
-  }
-
   ngOnDestroy() {
     if (this.placesSub) {
       this.placesSub.unsubscribe();
     }
+  }
+
+  public ionViewWillEnter() {
+    this.isLoading = true;
+    this.placesService.fetchPlaces().subscribe(() => {
+      this.isLoading = false;
+    });
+  }
+
+  /**
+   * When an offer is edited, the page routes back to edit page
+   */
+  public onEdit(offerId: string, slidingItem: IonItemSliding) {
+    slidingItem.close();
+    this.router.navigate(['/', 'places', 'tabs', 'offers', 'edit', offerId]);
+    console.log('Editing item', offerId);
   }
 }
