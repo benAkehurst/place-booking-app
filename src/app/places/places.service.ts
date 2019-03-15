@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
-import { take, map, tap, delay } from 'rxjs/operators';
+import { take, map, tap, delay, switchMap } from 'rxjs/operators';
 
 import { Place } from './place.model';
 import { AuthService } from '../auth/auth.service';
@@ -56,9 +57,9 @@ export class PlacesService {
     return this._places.asObservable();
   }
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private http: HttpClient) {}
 
-  getPlace(id: string) {
+  public getPlace(id: string) {
     return this.places.pipe(
       take(1),
       map(places => {
@@ -67,15 +68,21 @@ export class PlacesService {
     );
   }
 
-  addPlace(
+  /**
+   * Adds a new place to the server on firebase
+   * It builds a new place using the place model
+   * It stored a blank var to use when the post returns the new place id
+   */
+  public addPlace(
     title: string,
     description: string,
     price: number,
     dateFrom: Date,
     dateTo: Date
   ) {
+    let generatedId: string;
     const newPlace = new Place(
-      Math.random().toString(),
+      null,
       title,
       description,
       'https://lonelyplanetimages.imgix.net/mastheads/GettyImages-538096543_medium.jpg?sharp=10&vib=20&w=1200',
@@ -84,16 +91,25 @@ export class PlacesService {
       dateTo,
       this.authService.userId
     );
-    return this.places.pipe(
-      take(1),
-      delay(1000),
-      tap(places => {
-        this._places.next(places.concat(newPlace));
+
+    return this.http
+      .post<{ name: string }>('https://ionic-angular-app.firebaseio.com/offered-places.json', {
+        ...newPlace
       })
-    );
+      .pipe(
+        switchMap(resData => {
+          generatedId = resData.name;
+          return this.places;
+        }),
+        take(1),
+        tap(places => {
+          newPlace.id = generatedId;
+          this._places.next(places.concat(newPlace));
+        })
+      );
   }
 
-  updatePlace(placeId: string, title: string, description: string) {
+  public updatePlace(placeId: string, title: string, description: string) {
     return this.places.pipe(
       take(1),
       delay(1000),
