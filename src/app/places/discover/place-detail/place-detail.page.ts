@@ -12,6 +12,7 @@ import { PlacesService } from '../../places.service';
 import { Place } from '../../place.model';
 import { CreateBookingComponent } from '../../../bookings/create-booking/create-booking.component';
 import { BookingService } from '../../../bookings/booking.service';
+import { AuthService } from '../../../auth/auth.service';
 
 @Component({
   selector: 'app-place-detail',
@@ -19,7 +20,8 @@ import { BookingService } from '../../../bookings/booking.service';
   styleUrls: ['./place-detail.page.scss']
 })
 export class PlaceDetailPage implements OnInit, OnDestroy {
-  place: Place;
+  public place: Place;
+  public isBookable: boolean = false;
   private placeSub: Subscription;
 
   constructor(
@@ -29,8 +31,9 @@ export class PlaceDetailPage implements OnInit, OnDestroy {
     private modalCtrl: ModalController,
     private actionSheetCtrl: ActionSheetController,
     private bookingService: BookingService,
-    private loadingCtrl: LoadingController
-  ) {}
+    private loadingCtrl: LoadingController,
+    private authService: AuthService
+  ) { }
 
   ngOnInit() {
     this.route.paramMap.subscribe(paramMap => {
@@ -42,14 +45,18 @@ export class PlaceDetailPage implements OnInit, OnDestroy {
         .getPlace(paramMap.get('placeId'))
         .subscribe(place => {
           this.place = place;
+          this.isBookable = place.userId !== this.authService.userId;
         });
     });
   }
 
-  onBookPlace() {
-    // this.router.navigateByUrl('/places/tabs/discover');
-    // this.navCtrl.navigateBack('/places/tabs/discover');
-    // this.navCtrl.pop();
+  ngOnDestroy() {
+    if (this.placeSub) {
+      this.placeSub.unsubscribe();
+    }
+  }
+
+  public onBookPlace() {
     this.actionSheetCtrl
       .create({
         header: 'Choose an Action',
@@ -77,7 +84,7 @@ export class PlaceDetailPage implements OnInit, OnDestroy {
       });
   }
 
-  openBookingModal(mode: 'select' | 'random') {
+  public openBookingModal(mode: 'select' | 'random') {
     console.log(mode);
     this.modalCtrl
       .create({
@@ -112,11 +119,5 @@ export class PlaceDetailPage implements OnInit, OnDestroy {
             });
         }
       });
-  }
-
-  ngOnDestroy() {
-    if (this.placeSub) {
-      this.placeSub.unsubscribe();
-    }
   }
 }
