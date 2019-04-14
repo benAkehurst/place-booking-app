@@ -11,6 +11,7 @@ import { Subscription } from 'rxjs';
 
 import { PlacesService } from '../../places.service';
 import { Place } from '../../place.model';
+import { MapModalComponent } from '../../../shared/map-modal/map-modal.component';
 import { CreateBookingComponent } from '../../../bookings/create-booking/create-booking.component';
 import { BookingService } from '../../../bookings/booking.service';
 import { AuthService } from '../../../auth/auth.service';
@@ -55,20 +56,22 @@ export class PlaceDetailPage implements OnInit, OnDestroy {
             this.isLoading = false;
           },
           error => {
-            this.alertCrtl.create({
-              header: 'An Error Occured',
-              message: 'Could not load place',
-              buttons: [
-                {
-                  text: 'Okay',
-                  handler: () => {
-                    this.router.navigate(['/places/tabs/discover']);
+            this.alertCrtl
+              .create({
+                header: 'An Error Occured',
+                message: 'Could not load place',
+                buttons: [
+                  {
+                    text: 'Okay',
+                    handler: () => {
+                      this.router.navigate(['/places/tabs/discover']);
+                    }
                   }
-                }
-              ]
-            }).then(alertEl => {
-              alertEl.present();
-            });
+                ]
+              })
+              .then(alertEl => {
+                alertEl.present();
+              });
           }
         );
     });
@@ -143,5 +146,16 @@ export class PlaceDetailPage implements OnInit, OnDestroy {
             });
         }
       });
+  }
+
+  public onShowFullMap() {
+    this.modalCtrl.create({ component: MapModalComponent, componentProps: {
+      center: { lat: this.place.location.lat, lng: this.place.location.lng },
+      slectable: false,
+      closeButtonTitle: 'Close',
+      title: this.place.location.address
+    } }).then(modalEl => {
+      modalEl.present();
+    });
   }
 }
