@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
-import googleMapsApiKey from '../../../assets/keys/google-maps';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-map-modal',
@@ -36,6 +36,14 @@ export class MapModalComponent implements OnInit, AfterViewInit {
         googleMaps.event.addListenerOnce(map, 'idle', () => {
           this.renderer.addClass(mapEl, 'visable');
         });
+
+        map.addListener('click', event => {
+          const selectedCoords = {
+            lat: event.latLng.lat(),
+            lng: event.latLng.lng()
+          };
+          this.modalCtrl.dismiss(selectedCoords);
+        });
       })
       .catch(err => {
         console.log(err);
@@ -54,7 +62,7 @@ export class MapModalComponent implements OnInit, AfterViewInit {
     }
     return new Promise((resolve, reject) => {
       const script = document.createElement('script');
-      script.src = `https://maps.googleapis.com/maps/api/js?key=${googleMapsApiKey}`;
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${environment.googleMapsApiKey}`;
       script.async = true;
       script.defer = true;
       document.body.appendChild(script);

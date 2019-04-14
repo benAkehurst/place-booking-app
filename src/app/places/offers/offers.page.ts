@@ -13,7 +13,7 @@ import { Place } from '../place.model';
 })
 export class OffersPage implements OnInit, OnDestroy {
   public offers: Place[];
-  public isLoading: boolean = false;
+  public isLoading = false;
   private placesSub: Subscription;
 
   constructor(private placesService: PlacesService, private router: Router) {}
