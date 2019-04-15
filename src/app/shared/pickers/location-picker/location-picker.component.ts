@@ -85,7 +85,8 @@ export class LocationPickerComponent implements OnInit {
     this.alertCtrl
       .create({
         header: 'Could not fecth location',
-        message: 'Please use map to pick location'
+        message: 'Please use map to pick location',
+        buttons: ['Okay']
       })
       .then(alertEl => alertEl.present());
   }
