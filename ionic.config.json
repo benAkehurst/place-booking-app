@@ -1,5 +1,7 @@
 {
   "name": "final-project",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }
