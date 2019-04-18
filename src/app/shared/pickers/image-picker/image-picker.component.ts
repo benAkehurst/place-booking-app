@@ -21,8 +21,7 @@ export class ImagePickerComponent implements OnInit {
       quality: 50,
       source: CameraSource.Prompt,
       correctOrientation: true,
-      height: 320,
-      width: 200,
+      width: 600,
       resultType: CameraResultType.Base64
     })
     .then(image => {
@@ -31,7 +30,7 @@ export class ImagePickerComponent implements OnInit {
     })
     .catch(err => {
       console.log(err);
-    })
+    });
   }
 
 }
