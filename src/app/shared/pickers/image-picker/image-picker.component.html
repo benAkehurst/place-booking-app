@@ -16,3 +16,5 @@
     <ion-label>Select Image</ion-label>
   </ion-button>
 </div>
+
+<input type="file" *ngIf="usePicker" #filePicker (change)="onFileChosen($event)" />
