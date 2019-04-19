@@ -95,9 +95,10 @@ export class NewOfferPage implements OnInit {
   }
 
   public onCreateOffer() {
-    if (!this.form.valid) {
+    if (!this.form.valid || !this.form.get('image').value) {
       return;
     }
+    console.log(this.form.value);
     this.loadingCtrl
       .create({
         message: 'Creating place...'
