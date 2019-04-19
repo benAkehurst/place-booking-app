@@ -5,7 +5,7 @@ import { take, map, tap, delay, switchMap } from 'rxjs/operators';
 
 import { Place } from './place.model';
 import { AuthService } from '../auth/auth.service';
-import {PlaceLocation} from './location.model';
+import { PlaceLocation } from './location.model';
 
 /**
  * Defines responce type for get places request
@@ -106,14 +106,15 @@ export class PlacesService {
     price: number,
     dateFrom: Date,
     dateTo: Date,
-    location: PlaceLocation
+    location: PlaceLocation,
+    imageUrl: string
   ) {
     let generatedId: string;
     const newPlace = new Place(
       null,
       title,
       description,
-      'https://lonelyplanetimages.imgix.net/mastheads/GettyImages-538096543_medium.jpg?sharp=10&vib=20&w=1200',
+      imageUrl,
       price,
       dateFrom,
       dateTo,
@@ -178,6 +179,17 @@ export class PlacesService {
       tap(() => {
         this._places.next(updatedPlaces);
       })
+    );
+  }
+
+  /** Uses Firebase function to upload photo */
+  public uploadImage(image: File) {
+    const uploadData = new FormData();
+    uploadData.append('image', image);
+
+    return this.http.post<{imageUrl: string, imagePath: string}>(
+      'https://us-central1-ionic-angular-app.cloudfunctions.net/storeImage',
+      uploadData
     );
   }
 }
