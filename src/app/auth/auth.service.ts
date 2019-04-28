@@ -18,6 +18,7 @@ interface AuthResponseData {
 export class AuthService {
   private _userIsAuthenticated = false;
   private _userId = null;
+  private firebaseApiKey: string = environment.firebaseApiKey;
 
   /**
    * Returns from the private var is the user is authenticated
@@ -37,7 +38,9 @@ export class AuthService {
 
   public signUp(email: string, password: string) {
     return this.http.post<AuthResponseData>(
-      `https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=${environment.firebaseApiKey}`,
+      `https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=${
+        this.firebaseApiKey
+      }`,
       { email: email, password: password, returnSecureToken: true }
     );
   }
